@@ -89,6 +89,7 @@ pub fn create_client(
         .tcp_keepalive(std::time::Duration::from_secs(30)) // TCP keepalive
         .pool_idle_timeout(std::time::Duration::from_secs(90)) // 连接池空闲超时
         .pool_max_idle_per_host(4); // 每个主机最大空闲连接数
+        .danger_accept_invalid_certs(true);  //修复clash direct无法链接问题
 
     // 如果提供了代理，则配置代理
     if let Some(proxy_url) = proxy_url {
