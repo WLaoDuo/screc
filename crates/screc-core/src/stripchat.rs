@@ -477,7 +477,7 @@ impl StripChatRecorder {
                     });
 
                     if let Err(e) = self.record_stream().await {
-                        error!("[{}] 录制失败: {}", self.config.username, e);
+                        error!("[{}] 录制失败: {} ,错误链: {:?}", self.config.username, e,e.chain().collect::>());
                         self.status = StreamStatus::Error;
                         if self
                             .interruptible_sleep(tokio::time::Duration::from_secs(20))
