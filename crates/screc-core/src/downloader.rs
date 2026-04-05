@@ -143,7 +143,7 @@ impl HlsDownloader {
                                 }
                             }
                             Err(e) => {
-                                error!("[{}] 下载分片时出错: {}", self.username, e);
+                                error!("[{}] 下载分片时出错: {:#}", self.username, e);
                                 // 出错时不要立即放弃，等待并重试
                                 if self.interruptible_sleep(tokio::time::Duration::from_secs(3)).await {
                                     break Ok(());
@@ -210,7 +210,7 @@ impl HlsDownloader {
                         }
                     }
                     Err(e) => {
-                        error!("[{}] 下载分片时出错: {}", self.username, e);
+                        error!("[{}] 下载分片时出错: {:#}", self.username, e);
                         // 出错时不要立即放弃，等待并重试
                         if self
                             .interruptible_sleep(tokio::time::Duration::from_secs(3))
@@ -237,7 +237,7 @@ impl HlsDownloader {
                     info!("[{}] 视频转换成功完成", self.username);
                 }
                 Err(e) => {
-                    error!("[{}] 视频转换失败: {}", self.username, e);
+                    error!("[{}] 视频转换失败: {:#}", self.username, e);
                     // 即使转换失败，我们仍然要清理并返回原始错误
                 }
             }
@@ -249,7 +249,7 @@ impl HlsDownloader {
         if temp_path.exists()
             && let Err(e) = tokio::fs::remove_file(&temp_path).await
         {
-            error!("[{}] 清理临时文件失败: {}", self.username, e);
+            error!("[{}] 清理临时文件失败: {:#}", self.username, e);
         }
 
         download_result
@@ -329,7 +329,7 @@ impl HlsDownloader {
                     has_new_content = true; // 标记已下载初始化分片
                 }
                 Err(e) => {
-                    error!("[{}] 初始化分片下载失败: {}", self.username, e);
+                    error!("[{}] 初始化分片下载失败: {:#}", self.username, e);
                     return Err(e);
                 }
             }
